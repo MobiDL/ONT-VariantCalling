@@ -9,3 +9,5 @@ dependencies:
   - sambamba==0.7.1
   - minimap2==2.17
   - gatk4==4.1.8.1
+  - bcftools==1.10.2
+  - tabix==1.11

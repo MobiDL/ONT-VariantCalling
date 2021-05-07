@@ -21,13 +21,16 @@ import "tasks/minimap2.wdl" as minimap2
 import "tasks/sambamba.wdl" as sambamba
 import "tasks/clair.wdl" as clair
 import "tasks/GATK4.wdl" as GATK4
+import "tasks/bcftools.wdl" as bcftools
+import "tasks/bgzip.wdl" as bgzip
+import "tasks/tabix.wdl" as tabix
 
 workflow ONT_VariantCalling {
 	meta {
 		author: "MoBiDiC"
 		email: "c-vangoethem(at)chu-montpellier.fr"
-		version: "0.0.2"
-		date: "2021-04-28"
+		version: "0.0.3"
+		date: "2021-05-07"
 	}
 
 	input {
@@ -46,6 +49,9 @@ workflow ONT_VariantCalling {
 		Int qual = 748
 		File? bedRegions
 
+		String? filterRegionVCF
+		String? filterIncludeVCF
+
 		String? name
 	}
 
@@ -61,6 +67,8 @@ workflow ONT_VariantCalling {
 			regexpName = extFq,
 			maxDepth = maxDepth
 	}
+
+	# seqkt filter
 
 	String extConc = if gzip then ".fastq.gz" else ".fastq"
 
@@ -125,6 +133,31 @@ workflow ONT_VariantCalling {
 			in = CALLVARBAM.outputFile,
 			outputPath = outputPath + "/Variant-Calling/clair/",
 			subString = "-(chr)?[0-9WXYMT]+_[0-9]+_[0-9]+\.clair\.vcf$"
+	}
+
+	# filter
+	# gz and index
+	call bgzip.compress as BGZ_VCF {
+		input :
+			in = GATHERVCFFILES.outputFile,
+			outputPath = outputPath + "/Variant-Calling/clair/"
+	}
+	call tabix.index as TBI {
+		input :
+			in = BGZ_VCF.outputFile,
+			outputPath = outputPath + "/Variant-Calling/clair/"
+	}
+
+	if (defined(filterRegionVCF) || defined(filterIncludeVCF)) {
+		call bcftools.view as VIEW {
+			input :
+				in = BGZ_VCF.outputFile,
+				index = TBI.outputFile,
+				region = filterRegionVCF,
+				includeExp = filterIncludeVCF,
+				subStringReplace = ".filtered",
+				outputPath = outputPath + "/Variant-Calling/clair/"
+		}
 	}
 
 ################################################################################

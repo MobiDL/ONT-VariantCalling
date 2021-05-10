@@ -24,13 +24,14 @@ import "tasks/GATK4.wdl" as GATK4
 import "tasks/bcftools.wdl" as bcftools
 import "tasks/bgzip.wdl" as bgzip
 import "tasks/tabix.wdl" as tabix
+import "tasks/seqkit.wdl" as seqkit
 
 workflow ONT_VariantCalling {
 	meta {
 		author: "MoBiDiC"
 		email: "c-vangoethem(at)chu-montpellier.fr"
-		version: "0.0.3"
-		date: "2021-05-07"
+		version: "0.0.4"
+		date: "2021-05-10"
 	}
 
 	input {
@@ -48,6 +49,11 @@ workflow ONT_VariantCalling {
 
 		Int qual = 748
 		File? bedRegions
+
+		Int? maxLen
+		Int? maxQual
+		Int? minLen
+		Int? minQual
 
 		String? filterRegionVCF
 		String? filterIncludeVCF
@@ -80,9 +86,23 @@ workflow ONT_VariantCalling {
 			outputPath = outputPath + "/fastq_concatenate/"
 	}
 
+	if (defined(maxLen) || defined(maxQual) || defined(minLen) || defined(minQual)) {
+		call seqkit.seq_filter as FQ_FILTER {
+			input :
+				in = CONCATENATEFILES.outputFile,
+				maxLen = maxLen,
+				maxQual = maxQual,
+				minLen = minLen,
+				minQual = minQual,
+				subString = extConc,
+				subStringReplace = ".filtered" + extConc,
+				outputPath = outputPath + "/fastq_concatenate/"
+		}
+	}
+
 	call minimap2.mapOnt as MAPONT {
 		input :
-			fastq = CONCATENATEFILES.outputFile,
+			fastq = select_first([FQ_FILTER.outputFile, CONCATENATEFILES.outputFile]),
 			refFasta = refFa,
 			sample = sampleName,
 			outputPath = outputPath + "/Alignment/"

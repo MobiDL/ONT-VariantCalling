@@ -11,6 +11,10 @@
 	"ONT_VariantCalling.qual": 748,
 	"ONT_VariantCalling.bedRegions": "File? (optional)",
 	"ONT_VariantCalling.name": "String? (optional)",
+	"ONT_VariantCalling.maxLen": "Int? (optional)",
+	"ONT_VariantCalling.maxQual": "Int? (optional)",
+	"ONT_VariantCalling.minLen": "Int? (optional)",
+	"ONT_VariantCalling.minQual": "Int? (optional)",
 	"ONT_VariantCalling.filterRegionVCF": "String? (optional)",
 	"ONT_VariantCalling.filterIncludeVCF": "String? (optional)",
 

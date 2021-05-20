@@ -1,3 +1,3 @@
 [submodule "tasks"]
 	path = tasks
-	url = git@github.com:MobiDL/tasks.git
+	url = https://github.com/MobiDL/tasks.git

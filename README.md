@@ -63,6 +63,7 @@ This template is separating in 4 categories (blank line) :
 ```bash
 conda activate ONT-VariantCalling
 cromwell run \
+	-Dconfig.file=backends.conf/local.conf \
 	--inputs /path/to/inputs.json \
 	ONT-VariantCalling.wdl
 ```

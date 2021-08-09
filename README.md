@@ -7,7 +7,7 @@ This workflow do VariantCalling on Oxford Nanopore Technologies data.
 ### Clone the repo
 
 ```bash
-git clone --recursive git@github.com:MobiDL/ONT-VariantCalling.git
+git clone --recursive https://github.com/MobiDL/ONT-VariantCalling.git
 ```
 
 ### Install dependencies

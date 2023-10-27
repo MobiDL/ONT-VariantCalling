@@ -1,14 +1,15 @@
-name: ONT-VariantCalling
+name: MobiDL-ONT-VariantCalling
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - clair==2.1.1
-  - cromwell==53.1
-  - sambamba==0.7.1
-  - minimap2==2.17
-  - gatk4==4.1.8.1
-  - bcftools==1.10.2
+  - clair3==1.0.4 
+  - cromwell==83
+  - sambamba==1.0
+  - minimap2==2.26
+  - gatk4==4.4.0.0
+  - bcftools==1.18
   - tabix==1.11
-  - seqkit==0.16.0
+  - seqkit==2.5.1
+  - samtools==1.18

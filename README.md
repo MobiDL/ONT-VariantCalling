@@ -7,7 +7,7 @@ This workflow do VariantCalling on Oxford Nanopore Technologies data.
 ### Clone the repo
 
 ```bash
-git clone --recursive git@github.com:MobiDL/ONT-VariantCalling.git
+git clone --recursive https://github.com/MobiDL/ONT-VariantCalling.git
 ```
 
 ### Install dependencies
@@ -63,6 +63,7 @@ This template is separating in 4 categories (blank line) :
 ```bash
 conda activate ONT-VariantCalling
 cromwell run \
+	-Dconfig.file=backends.conf/local.conf \
 	--inputs /path/to/inputs.json \
 	ONT-VariantCalling.wdl
 ```

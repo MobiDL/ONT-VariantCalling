@@ -24,6 +24,7 @@ import "tasks/minimap2.wdl" as runMinimap2
 import "tasks/sambamba.wdl" as runSambamba
 import "tasks/clair3.wdl" as runClair3
 import "tasks/nanorepeat.wdl" as runNanorepeat
+import "tasks/bcftools.wdl" as runBcftools
 
 workflow ONT_2023 {
 	meta {
@@ -158,6 +159,17 @@ workflow ONT_2023 {
 		}
 	}
 
+
+################################################################################
+### normalise VCF
+
+	call runBcftools.norm as BCFTOOLSSPLIT {
+		input:
+			in = CLAIR3.outputFile,
+			outputPath = outputPath,
+			splitMA = true,
+			multiallelicType = "both"
+        }
 
 ################################################################################
 ## MultiQC

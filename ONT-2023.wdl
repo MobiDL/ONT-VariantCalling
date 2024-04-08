@@ -166,10 +166,10 @@ workflow ONT_2023 {
 	call runBcftools.norm as BCFTOOLSSPLIT {
 		input:
 			in = CLAIR3.outputFile,
-			outputPath = outputPath,
 			splitMA = true,
 			multiallelicType = "both",
-			refFasta = refFa
+			refFasta = refFa,
+			outputPath = outputPath + "/clair3/"
         }
 
 ################################################################################

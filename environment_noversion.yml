@@ -1,0 +1,12 @@
+name: MobiDL-ONT-VariantCalling-TEST
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - fastqc
+  - clair3
+  - cromwell
+  - sambamba
+  - minimap2
+  - samtools

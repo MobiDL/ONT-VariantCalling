@@ -1,0 +1,16 @@
+name: MobiDL-ONT-2023
+channels:
+  - conda-forge
+  - anaconda
+  - bioconda
+  - defaults
+dependencies:
+  - tensorflow
+  - clair3
+  - fastqc
+  - cromwell
+  - sambamba
+  - minimap2
+  - gatk4
+  - multiqc
+prefix: /home/bio/miniconda3/envs/MobiDL-ONT-2023

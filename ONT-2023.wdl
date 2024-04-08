@@ -167,7 +167,7 @@ workflow ONT_2023 {
 			in = CLAIR3.outputFile,
 			outputPath = outputPath,
 			splitMA = true,
-			multiallelicType = "both",
+			multiallelicType = "both"
         }
 
 ################################################################################
